@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useData } from './hooks/data'
 import Page from './layout/page'
-import PetList from './components/PetLists'
+// import PetList from './components/PetLists'
 import styled, { ThemeProvider } from 'styled-components';
 import Header from './layout/header'
 const Container = styled.div`
@@ -22,7 +21,7 @@ function App() {
             <Container>
                 <Box>
                     <Header/>
-                    <PetList />
+                    {/* <PetList /> */}
                 </Box>
             </Container>
         </Page>

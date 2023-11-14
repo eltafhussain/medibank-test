@@ -21,10 +21,14 @@
         "allowJs": true,
         "moduleResolution": "node",
         "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+        "types": [
+            "node",
+            "jest",
+            "@testing-library/jest-dom"
+        ],
     },
     "include": [
-        "**/*.ts",
-        "**/*.tsx"
+        "src"
     ]
 }

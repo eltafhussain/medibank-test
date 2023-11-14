@@ -45,6 +45,7 @@ interface IListItemProps {
     index: number,
     onExpand: Function
 }
+
 interface IPetProps {
     pet: IPet
 }
