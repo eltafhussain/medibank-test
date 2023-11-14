@@ -2,9 +2,7 @@ import React, { useState } from 'react'
 import { useData } from '../hooks/data'
 import styled from 'styled-components'
 import { IPetListByGender, IPetsWithOwner } from '@/interfaces'
-const Wrapper = styled.div`
-    /* min-width: 40rem; */
-`
+
 const Box = styled.div`
     display: flex;
     padding: .8rem 2rem;
@@ -47,14 +45,15 @@ interface IPetProps {
     pet: IPetsWithOwner
 }
 
-const PetLists: React.FC<any> = () => {
+// List down the pets by owners gender
+const PetListsByOwnerGender: React.FC<any> = () => {
     const { petsByGender } = useData()
     const [expanded, setExpanded] = useState(0);
     const handleExpand = (index: number) => {
         setExpanded(index)
     }
     return (
-        <Wrapper>
+        <div>
             {
                 petsByGender.length > 0 && petsByGender?.map((gender, index) =>
                     <ListItem
@@ -66,7 +65,7 @@ const PetLists: React.FC<any> = () => {
                     />
                 )
             }
-        </Wrapper>
+        </div>
     )
 }
 interface PetListProps {
@@ -119,8 +118,8 @@ const PetItem: React.FC<IPetProps> = ({ pet, index, pIndex }) => {
             >
                 {pet.name}
             </p>
-            <Caption data-testid={`item-${index}-caption`}>{`${pet.owner.name} - ${pet.owner.age}`}</Caption>
+            <Caption data-testid={`item-${index}-pet-${pIndex}-owner`}>{`${pet.owner.name} - ${pet.owner.age}`}</Caption>
         </PetItemContainer>
     )
 }
-export default PetLists;
+export default PetListsByOwnerGender;
