@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Page from './layout/page'
-import PetList from './components/PetLists'
+import PetsByOwner from './components/PetsByOwner'
+import PetListByGender from './components/PetListByGender'
 import styled, { ThemeProvider } from 'styled-components';
 import Header from './layout/header'
 const Container = styled.div`
@@ -21,7 +22,8 @@ function App() {
             <Container>
                 <Box>
                     <Header/>
-                    <PetList />
+                    <PetListByGender />
+                    {/* <PetsByOwner/> */}
                 </Box>
             </Container>
         </Page>

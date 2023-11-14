@@ -5,14 +5,12 @@ import mockData from './mockData.json'
 import * as hooks from '../hooks/data';
 describe('App component', () => {
     beforeAll(() => {
-        jest.spyOn(hooks, 'useData').mockImplementation(() => ({ data: mockData }));
+        jest.spyOn(hooks, 'useData').mockImplementation(() => ({ petsByOwner: mockData.API_RESPONSE, petsByGender: [] }));
         render(<App />)
     })
 
     it('should have the right message in the dom', () => {
-        
-        const message = 'The House of Pets';
-
+        const message = 'The House of Cats';
         expect(screen.getByText(message)).toBeInTheDocument()
     })
 

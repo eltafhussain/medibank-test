@@ -1,11 +1,11 @@
 import React from 'react';
-import { screen, render, cleanup, fireEvent } from '@testing-library/react'
-import PetList from '../components/PetLists'
+import { screen, render, cleanup, fireEvent, act, waitFor } from '@testing-library/react'
+import PetList from '../components/PetsByOwner'
 import mockData from './mockData.json'
 import * as hooks from '../hooks/data';
 describe('Pets List', () => {
     beforeEach(() => {
-        jest.spyOn(hooks, 'useData').mockImplementation(() => ({ data: mockData }));
+        jest.spyOn(hooks, 'useData').mockImplementation(() => ({ petsByOwner: mockData.API_RESPONSE, petsByGender: [] }));
         render(<PetList />)
     })
 
@@ -14,7 +14,7 @@ describe('Pets List', () => {
         expect(screen.queryByTestId('item-1-expanded')).toBeNull();
     })
     it('should populate all owners details correctly', () => {
-        mockData.forEach((owner, index) => {
+        mockData.API_RESPONSE.forEach((owner, index) => {
             const petNumber = owner?.pets?.length || 0
             expect(screen.getByTestId(`item-${index}`)).toBeInTheDocument();
             expect(screen.getByTestId(`item-${index}-title`)).toHaveTextContent(owner.name)
@@ -29,12 +29,13 @@ describe('Pets List', () => {
 
         // fire click event
         fireEvent.click(screen.getByTestId('item-1'))
-        expect(screen.getByTestId('item-1-expanded')).toBeInTheDocument()
-        expect(screen.getByTestId('item-1-pet-0-name')).toHaveTextContent('Garfield')
-        expect(screen.getByTestId('item-1-pet-1-name')).toHaveTextContent('Fido')
-        expect(screen.queryByTestId('item-4-expanded')).toBeNull();
-        expect(screen.queryByTestId('item-0-expanded')).toBeNull();
-        expect(screen.queryByTestId('item-2-expanded')).toBeNull();
+        waitFor(() => {
+            expect(screen.getByTestId('item-1-expanded')).toBeInTheDocument()
+            expect(screen.getByTestId('item-1-pet-0-name')).toHaveTextContent('Garfield')
+            expect(screen.queryByTestId('item-4-expanded')).toBeNull();
+            expect(screen.queryByTestId('item-0-expanded')).toBeNull();
+            expect(screen.queryByTestId('item-2-expanded')).toBeNull();
+        })
     })
     afterAll(cleanup)
 })

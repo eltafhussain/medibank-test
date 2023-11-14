@@ -4,11 +4,12 @@ import styled from 'styled-components'
 const Wrapper = styled.div`
     padding: 2rem 6rem;
     background-color:#B3C5DB;
+    min-height:100vh;
 `
 interface Iprops {
     children: ReactNode
 }
-const Page:React.FC<Iprops> = ({children}) => {
+const Page: React.FC<Iprops> = ({ children }) => {
     return (
         <Wrapper>
             {children}

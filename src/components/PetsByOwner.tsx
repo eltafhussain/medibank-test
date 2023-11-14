@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useData } from '../hooks/data'
 import styled from 'styled-components'
-import { IDataList, IPet } from '../hooks/data'
+import { IDataList, IPet } from '@/interfaces'
 const Wrapper = styled.div`
     /* min-width: 40rem; */
 `
@@ -53,7 +53,7 @@ interface IPetProps {
 }
 
 const PetLists: React.FC<any> = () => {
-    const { data } = useData()
+    const { petsByOwner } = useData()
     const [expanded, setExpanded] = useState(0);
     const handleExpand = (index: number) => {
         setExpanded(index)
@@ -61,7 +61,7 @@ const PetLists: React.FC<any> = () => {
     return (
         <Wrapper>
             {
-                data.length > 0 && data?.map((person, index) =>
+                petsByOwner.length > 0 && petsByOwner?.map((person, index) =>
                     <ListItem
                         key={'item' + index}
                         index={index}
@@ -80,8 +80,6 @@ interface PetListProps {
 const PetListWrapper = styled.div<PetListProps>`
      padding: .5rem 2rem;
      background-color:#eee;
-     /* height: ${p => p.expanded ? 'auto' : 0};
-     transition: all 0.3s ease-out; */
 `
 
 const ListItem: React.FC<IListItemProps> = ({ person, index, onExpand, expanded }) => {
@@ -97,7 +95,7 @@ const ListItem: React.FC<IListItemProps> = ({ person, index, onExpand, expanded 
                 <p data-testid={`item-${index}-pet`}>{`${petNumber} pet${petNumber > 1 ? 's' : ''}`} </p>
             </Box>
             {(person.pets && expanded) &&
-                <PetListWrapper data-testid={`item-${index}-expanded`}>
+                <PetListWrapper data-testid={`item-${index}-expanded`} expanded={expanded}>
                     {person.pets?.map((pet, pIndex) =>
                         <PetItem key={'pet' + pIndex} pet={pet} index={index} pIndex={pIndex} />
                     )}
@@ -110,16 +108,17 @@ const PetItemContainer = styled.div`
     display:flex;
     justify-content:space-between;
 `
-
-const petTypes = {
+const PetName = styled.p`
+    padding-left:1rem;
+`
+const petTypes: any = {
     'Cat': '🐈',
     'Fish': '🐟',
     'Dog': '🐕'
 }
 const PetItem: React.FC<IPetProps> = ({ pet, index, pIndex }) => {
     const { type } = pet
-    const typeIcon = type === 'Cat' ? '🐈' :
-        type == 'Dog' ? '🐕' : '🐟'
+    const typeIcon = petTypes[type]
     return (
         <PetItemContainer>
             <p key={pet.name}
@@ -127,7 +126,7 @@ const PetItem: React.FC<IPetProps> = ({ pet, index, pIndex }) => {
             >
                 {pet.name}
             </p>
-            <p key={pet.type}>{typeIcon}</p>
+            <PetName key={pet.type}> {`${type} (${typeIcon})`}</PetName>
         </PetItemContainer>
     )
 }
