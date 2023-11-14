@@ -8,10 +8,10 @@ const Wrapper = styled.div`
 interface Iprops {
     children: ReactNode
 }
-const Page = (props: Iprops) => {
+const Page:React.FC<Iprops> = ({children}) => {
     return (
         <Wrapper>
-            {props.children}
+            {children}
         </Wrapper>
     )
 }

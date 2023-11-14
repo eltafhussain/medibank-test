@@ -17,14 +17,16 @@ export const useData = () => {
     const [data, setData] = useState<IDataList[]>([])
     useEffect(() => {
         async function fetchData() {
-            fetch(URL).then(res => res.json()).then((res) => {
+            fetch(URL).then(res => res.json()).then((res: IDataList[]) => {
                 console.log('data', res)
-                setData(res)
+                setData(res.sort((a, b) => a.name.localeCompare(b.name)))
             })
         }
         if (data.length === 0)
             fetchData();
     })
+
+
 
     return { data }
 }

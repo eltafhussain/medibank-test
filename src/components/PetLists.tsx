@@ -47,6 +47,8 @@ interface IListItemProps {
 }
 
 interface IPetProps {
+    index: number
+    pIndex: number
     pet: IPet
 }
 
@@ -61,6 +63,7 @@ const PetLists: React.FC<any> = () => {
             {
                 data.length > 0 && data?.map((person, index) =>
                     <ListItem
+                        key={'item' + index}
                         index={index}
                         person={person}
                         expanded={index === expanded}
@@ -72,7 +75,7 @@ const PetLists: React.FC<any> = () => {
     )
 }
 interface PetListProps {
-    expanded: boolean
+    expanded?: boolean
 }
 const PetListWrapper = styled.div<PetListProps>`
      padding: .5rem 2rem;
@@ -84,19 +87,19 @@ const PetListWrapper = styled.div<PetListProps>`
 const ListItem: React.FC<IListItemProps> = ({ person, index, onExpand, expanded }) => {
     const petNumber = person?.pets?.length || 0
     return (
-        <div>
-            <Box key={person.name} onClick={() => onExpand(index)}>
+        <div key={'item-' + index}>
+            <Box key={person.name} data-testid={'item-' + index} onClick={() => onExpand(index)} >
                 <TitleWrapper>
-                    <Title>{person.name}</Title>
-                    <Caption>{`${person.gender} - ${person.age}`}</Caption>
+                    <Title data-testid={`item-${index}-title`} >{person.name}</Title>
+                    <Caption data-testid={`item-${index}-caption`}>{`${person.gender} - ${person.age}`}</Caption>
                 </TitleWrapper>
                 <Spacer />
-                <p>{`${petNumber} pet${petNumber > 1 ? 's' : ''}`} </p>
+                <p data-testid={`item-${index}-pet`}>{`${petNumber} pet${petNumber > 1 ? 's' : ''}`} </p>
             </Box>
             {(person.pets && expanded) &&
-                <PetListWrapper expanded={expanded}>
-                    {person.pets?.map(pet =>
-                        <PetItem pet={pet} />
+                <PetListWrapper data-testid={`item-${index}-expanded`}>
+                    {person.pets?.map((pet, pIndex) =>
+                        <PetItem key={'pet' + pIndex} pet={pet} index={index} pIndex={pIndex} />
                     )}
                 </PetListWrapper>
             }
@@ -113,13 +116,17 @@ const petTypes = {
     'Fish': '🐟',
     'Dog': '🐕'
 }
-const PetItem: React.FC<IPetProps> = ({ pet }) => {
+const PetItem: React.FC<IPetProps> = ({ pet, index, pIndex }) => {
     const { type } = pet
     const typeIcon = type === 'Cat' ? '🐈' :
         type == 'Dog' ? '🐕' : '🐟'
     return (
         <PetItemContainer>
-            <p key={pet.name}>{pet.name}</p>
+            <p key={pet.name}
+                data-testid={`item-${index}-pet-${pIndex}-name`}
+            >
+                {pet.name}
+            </p>
             <p key={pet.type}>{typeIcon}</p>
         </PetItemContainer>
     )
