@@ -19,7 +19,12 @@ const Box = styled.div`
 function App() {
     return (
         <Page>
-            
+            <Container>
+                <Box>
+                    <Header/>
+                    <PetList />
+                </Box>
+            </Container>
         </Page>
     );
 }
