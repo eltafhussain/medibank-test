@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Page from './layout/page'
-import PetsByOwner from './components/PetsByOwner'
+// import PetsByOwner from './components/PetsByOwner'
 import PetListByGender from './components/PetListByGender'
-import styled, { ThemeProvider } from 'styled-components';
+import styled from 'styled-components';
 import Header from './layout/header'
 const Container = styled.div`
     display:flex;
@@ -12,6 +12,7 @@ const Container = styled.div`
 `
 const Box = styled.div`
     width:30rem;
+    margin-top:5rem;
     background-color:#fff;
     box-shadow:1px 3px 20px rgba(0,0,0,.2);
 `
@@ -21,7 +22,7 @@ function App() {
         <Page>
             <Container>
                 <Box>
-                    <Header/>
+                    <Header />
                     <PetListByGender />
                     {/* <PetsByOwner/> */}
                 </Box>

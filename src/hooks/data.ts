@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react'
 import { IDataList, IPetListByGender } from '@/interfaces'
 import { getData, } from '../utils/API'
-const URL = "https://gist.githubusercontent.com/medibank-digital/a1fc81a93200a7b9d5f8b7eae0fac6f8/raw/de10a4fcf717e6c431e88c965072c784808fd6b2/people.json"
 
 export const useData = () => {
     const [petsByOwner, setPetsByOwner] = useState<IDataList[]>([])
     const [petsByGender, setPetsByGender] = useState<IPetListByGender[]>([])
     useEffect(() => {
         async function fetchData() {
+            // Fetch data from API or any source
             const response: IDataList[] = await getData()
             console.log('respnse', response)
             if (response) {
+                // Parse data based on owner's gender
                 const data: IPetListByGender[] = [{ type: 'Female', pets: [] }, { type: 'Male', pets: [] }]
                 for (const person of response) {
                     const type = data.find((t: any) => t.type === person.gender)
@@ -20,6 +21,7 @@ export const useData = () => {
                                 type.pets.push({ ...pet, owner: person })
                         }
                 }
+                // sort pets by name in alphabetical order
                 for (const gender of data) {
                     gender.pets.sort((a, b) => a.name.localeCompare(b.name))
                 }
@@ -30,7 +32,8 @@ export const useData = () => {
         if (petsByGender.length === 0)
             fetchData();
     })
-
+    
+    // hook returned value
     return { petsByOwner, petsByGender }
 }
 
