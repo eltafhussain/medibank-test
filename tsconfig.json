@@ -3,15 +3,9 @@
         "baseUrl": ".",
         "outDir": "./dist/",
         "paths": {
-            "@/*": [
-                "src/*"
-            ],
-            "@/hooks/*": [
-                "src/hooks/*"
-            ],
-            "@/types/*": [
-                "src/types/*"
-            ],
+            "@/*": ["src/*"],
+            "@/hooks/*": ["src/hooks/*"],
+            "@/types/*": ["src/types/*"]
         },
         "sourceMap": true,
         "noImplicitAny": true,
@@ -23,13 +17,7 @@
         "resolveJsonModule": true,
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
-        "types": [
-            "node",
-            "jest",
-            "@testing-library/jest-dom"
-        ],
+        "types": ["node", "jest", "@testing-library/jest-dom"]
     },
-    "include": [
-        "src"
-    ]
+    "include": ["src"]
 }

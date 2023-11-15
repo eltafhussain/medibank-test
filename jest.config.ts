@@ -1,4 +1,4 @@
 module.exports = {
-    setupFilesAfterEnv: ['<rootDir>/setUpTests.js'],
-    "testEnvironment": "jsdom"
+    setupFilesAfterEnv: ["<rootDir>/setUpTests.js"],
+    testEnvironment: "jsdom",
 };
